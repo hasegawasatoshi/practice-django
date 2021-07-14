@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  django:
+    build: ./django
+    image: django/practice
+    ports:
+      - "8000:8000"
+    command: ["./wait-for-postgres.sh", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+    environment:
+      - DJANGO_SUPERUSER_USERNAME=${DJANGO_SUPERUSER_USERNAME}
+      - DJANGO_SUPERUSER_PASSWORD=${DJANGO_SUPERUSER_PASSWORD}
+      - DJANGO_SUPERUSER_EMAIL=${DJANGO_SUPERUSER_EMAIL}
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    depends_on:
+      - postgres
+    networks: 
+      - default
+  postgres:
+    image: postgres
+    volumes:
+      - postgres-lib:/var/lib/postgresql/data
+    env_file: .env
+    ports:
+      - "${IP}:5432:5432"
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    networks: 
+      - default
+    restart: always
+
+networks: 
+  default:
+    driver: bridge
+
+volumes:
+  postgres-lib:
+    driver: local
