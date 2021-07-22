@@ -1,10 +1,22 @@
-from django.urls import path
-from rest_framework.urlpatterns import format_suffix_patterns
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from monitoring import views
 
-urlpatterns = [
-    path('sensor/', views.SensorList.as_view()),
-    path('sensor/<slug:pk>', views.sensor.SensorDetail.as_view()),
-]
+sensor_list = views.sensor.SensorViewSet.as_view({
+    'get': 'list',
+    'post': 'create'
+})
 
-urlpatterns = format_suffix_patterns(urlpatterns)
+sensor_detail = views.sensor.SensorViewSet.as_view({
+    'get': 'retrieve',
+    'put': 'update',
+    'patch': 'partial_update',
+    'delete': 'destroy'
+})
+
+router = DefaultRouter()
+router.register(r'sensor', views.sensor.SensorViewSet)
+
+urlpatterns = [
+    path('', include(router.urls))
+]

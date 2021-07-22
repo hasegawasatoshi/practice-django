@@ -35,7 +35,7 @@ print('')
 
 # Get sensor details
 print('## Create sensor details')
-response = requests.request("GET", url + serial_number, headers=headers)
+response = requests.request("GET", url + serial_number + '/', headers=headers)
 print(f'Status Code = {response.status_code}')
 pprint.pprint(response.json())
 print('')
@@ -43,7 +43,7 @@ print('')
 # Update sensor details
 print('## Update the sensor details')
 response = requests.request(
-    "PUT", url + serial_number, headers=headers, data=json.dumps({
+    "PUT", url + serial_number + '/', headers=headers, data=json.dumps({
         'serial_number': serial_number,
         'display_name': display_name2
     }))
@@ -53,7 +53,8 @@ print('')
 
 # delete the sensor
 print('## Delete the sensor')
-response = requests.request("DELETE", url + serial_number, headers=headers)
+response = requests.request(
+    "DELETE", url + serial_number + '/', headers=headers)
 print(f'Status Code = {response.status_code}')
 pprint.pprint(response.text)
 print('')

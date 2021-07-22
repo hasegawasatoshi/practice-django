@@ -1,1 +1,1 @@
-from .sensor import SensorList, SensorDetail
+from .sensor import SensorViewSet
