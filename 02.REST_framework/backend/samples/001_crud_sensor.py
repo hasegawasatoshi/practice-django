@@ -2,7 +2,7 @@ import requests
 import json
 import pprint
 
-url = "http://localhost:8000/sensor/"
+url = "http://localhost:8000/api/sensor/"
 
 serial_number = 'BMTL-123456'
 display_name1 = 'テスト機'
