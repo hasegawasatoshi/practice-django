@@ -1,1 +1,26 @@
-<div class="sample">{{ sensor_list }}</div>
+{% extends 'base.html' %}
+{% block title %}Sensor List{% endblock %}
+
+
+{% block content %}
+<div class="container">
+    <div class="box">
+        <table class="table is-striped">
+            <thead>
+                <tr>
+                    <td>S/N</td>
+                    <td>表示名</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sensor in sensor_list %}
+                <tr>
+                    <td>{{ sensor.serial_number }}</td>
+                    <td>{{ sensor.display_name }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
