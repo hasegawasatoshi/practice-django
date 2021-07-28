@@ -2,6 +2,7 @@ import json
 from django.views import generic
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
@@ -39,6 +40,7 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
         return context
 
 
+@login_required
 @api_view(['GET'])
 def get_data(request):
     """
